@@ -174,6 +174,14 @@
     @media(hover:hover) and (pointer:fine){.envelope{cursor:pointer}.envelope:hover{filter:drop-shadow(0 38px 38px #42303c30) drop-shadow(0 8px 10px #9d496a22)}}
     @keyframes envelopeAura{to{transform:rotate(360deg)}}@keyframes sealGlow{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.35);opacity:0}}@keyframes buttonShimmer{0%,55%{left:-45%}80%,100%{left:125%}}
     @media(max-width:520px){.envelope-seal{width:54px;height:54px}.envelope-letter:before{inset:9px}.envelope-greeting{font-size:19px}}
+    /* Fine stationery details on the envelope face. */
+    .envelope-back{background-color:#f1dfe0;background-image:radial-gradient(#b9828b24 .7px,transparent .8px),linear-gradient(145deg,#f7e9e2 0%,#ead4d6 52%,#dfd4e9 100%);background-size:9px 9px,100% 100%}
+    .envelope-flap:before{background-color:#f4e2e2;background-image:radial-gradient(ellipse at 50% 12%,#fff9 0,transparent 52%),radial-gradient(#b9828b21 .65px,transparent .8px),linear-gradient(145deg,#fff4ec,#f1dddd 55%,#e5d9eb);background-size:auto,9px 9px,100% 100%;border:1px solid #fff9;box-shadow:inset 0 1px 0 #fff}
+    .envelope-flap:after{content:"";position:absolute;left:12%;right:12%;top:6%;height:38%;border:1px solid #c49a7655;border-bottom:0;clip-path:polygon(0 0,100% 0,50% 100%);pointer-events:none}
+    .envelope-pocket{background-image:radial-gradient(#a9717c1c .7px,transparent .8px),linear-gradient(135deg,#f5e5df 0%,#e9cfd4 50%,#ded3e8 100%);background-size:10px 10px,100% 100%}
+    .envelope-pocket:before{content:"";position:absolute;inset:0;background:linear-gradient(33deg,transparent 49.7%,#c49a7660 50%,transparent 50.35%),linear-gradient(-33deg,transparent 49.7%,#c49a7660 50%,transparent 50.35%);clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);pointer-events:none}
+    .envelope:before{content:"";position:absolute;z-index:5;inset:9px;border:1px solid #c49a7655;border-radius:8px;pointer-events:none;opacity:.8}
+    .envelope-seal{background:radial-gradient(circle at 35% 28%,#f0bfd0 0%,#b9587f 48%,#743451 100%)}
     @media(prefers-reduced-motion:reduce){.envelope-screen:before,.envelope,.envelope-seal:after,.envelope-open:after{animation:none}}
   </style>
 </head>
