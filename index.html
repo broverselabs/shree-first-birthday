@@ -110,6 +110,22 @@
     .carousel-count{min-width:56px;color:var(--berry);font:11px 'DM Sans',sans-serif;letter-spacing:.12em}
     @media(max-width:760px){.carousel-stage{height:360px;margin-top:22px}.carousel-card{width:min(62vw,235px)}.carousel-card figcaption{font-size:14px}.carousel-controls{margin-top:0}}
     @media(prefers-reduced-motion:reduce){.carousel-card{transition:none}}
+    /* Birthday envelope: opens into the existing invitation. */
+    body.envelope-closed{overflow:hidden}
+    .envelope-screen{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 50% 30%,#fffdf9 0%,#f5e8e8 48%,#e8dff0 100%);transition:opacity .8s ease,visibility .8s ease}
+    .envelope-screen:before,.envelope-screen:after{content:"✦";position:absolute;color:#c9a86e;opacity:.55;font-size:22px;animation:twinkle 2.8s ease-in-out infinite alternate}
+    .envelope-screen:before{top:15%;left:17%}.envelope-screen:after{right:16%;bottom:18%;animation-delay:.8s}
+    .envelope-wrap{width:min(520px,88vw);text-align:center;position:relative;z-index:1}.envelope-greeting{margin:0 0 25px;color:var(--berry);font:italic 22px 'Playfair Display',Georgia,serif}
+    .envelope{position:relative;width:100%;aspect-ratio:1.55/1;perspective:1000px;filter:drop-shadow(0 25px 35px #42303c25)}.envelope-back{position:absolute;inset:0;border-radius:12px;background:#ead9d1}
+    .envelope-letter{position:absolute;left:7%;right:7%;bottom:5%;height:86%;display:grid;align-content:center;gap:10px;padding:20px;border-radius:8px;background:#fffdf9;box-shadow:0 4px 14px #42303c15;transition:transform 1s cubic-bezier(.2,.75,.2,1);color:var(--berry)}
+    .envelope-letter span{font:10px 'DM Sans',sans-serif;letter-spacing:.24em;text-transform:uppercase}.envelope-letter strong{font:clamp(25px,6vw,40px) 'Playfair Display',Georgia,serif;font-weight:500}.envelope-letter small{color:var(--muted);font:12px 'DM Sans',sans-serif}
+    .envelope-pocket{position:absolute;inset:0;border-radius:12px;background:linear-gradient(145deg,#f5e5df,#e8cfd0);clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);z-index:2}
+    .envelope-flap{position:absolute;inset:0;z-index:3;transform-origin:top center;transition:transform .75s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}.envelope-flap:before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,#f8ebe5,#eddbdc);clip-path:polygon(0 0,100% 0,50% 58%);backface-visibility:hidden}
+    .envelope-seal{position:absolute;z-index:4;left:50%;top:46%;width:58px;height:58px;display:grid;place-items:center;transform:translate(-50%,-50%);border:1px solid #ffffffa8;border-radius:50%;background:var(--berry);color:#fff8ed;font:27px 'Playfair Display',Georgia,serif;box-shadow:0 5px 16px #6f304733;transition:opacity .3s,transform .3s}
+    .envelope-open{margin-top:28px;min-height:48px;padding:0 24px;border:1px solid #c98da0;border-radius:999px;background:#fffaf6;color:var(--berry);font:700 11px 'DM Sans',sans-serif;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px #9d496a1c;transition:transform .2s,background .2s,color .2s}.envelope-open:hover{transform:translateY(-2px);background:var(--berry);color:white}
+    .envelope-hint{margin:12px 0 0;color:var(--muted);font-size:11px;letter-spacing:.04em}.envelope-screen.is-opening .envelope-flap{transform:rotateX(180deg)}.envelope-screen.is-opening .envelope-seal{opacity:0;transform:translate(-50%,-50%) scale(.6)}.envelope-screen.is-opening .envelope-letter{transform:translateY(-58%)}.envelope-screen.is-gone{opacity:0;visibility:hidden;pointer-events:none}
+    @media(max-width:520px){.envelope-wrap{width:min(460px,90vw)}.envelope-greeting{font-size:19px;margin-bottom:22px}.envelope-letter{gap:7px;padding:12px}.envelope-letter span{font-size:8px}.envelope-letter small{font-size:10px}.envelope-seal{width:48px;height:48px;font-size:23px}}
+    @media(prefers-reduced-motion:reduce){.envelope-screen,.envelope-flap,.envelope-letter,.envelope-seal{transition:none}}
     .detail-grid{gap:18px;align-items:stretch}
     .detail-card{position:relative;isolation:isolate;overflow:hidden;min-height:225px;padding:26px 24px;border:1px solid #e6bf8b45;border-radius:22px;background:linear-gradient(145deg,#ffffff15 0%,#ffffff09 62%,#d6ad6b0c 100%);box-shadow:0 20px 48px #17152230;backdrop-filter:blur(10px)}
     .detail-card:before{content:"";position:absolute;z-index:0;pointer-events:none;width:150px;height:150px;right:-62px;top:-72px;border-radius:50%;background:#e6bf8b12;filter:blur(2px)}.detail-card>*{position:relative;z-index:1}
@@ -138,6 +154,13 @@
   </style>
 </head>
 <body>
+  <div class="envelope-screen" id="envelopeScreen" role="dialog" aria-modal="true" aria-labelledby="envelopeGreeting">
+    <div class="envelope-wrap"><p class="envelope-greeting" id="envelopeGreeting">A little birthday surprise for you</p>
+      <div class="envelope" aria-hidden="true"><div class="envelope-back"></div><div class="envelope-letter"><span>You're invited</span><strong>Shree turns one!</strong><small>Open your invitation</small></div><div class="envelope-pocket"></div><div class="envelope-flap"></div><div class="envelope-seal">S</div></div>
+      <button class="envelope-open" id="openEnvelope" type="button">Open invitation</button><p class="envelope-hint">Tap to open your birthday invitation</p>
+    </div>
+  </div>
+  <div id="invitationContent" inert>
   <header class="topbar"><div class="brand"><img class="brand-logo" src="images/logo.svg?v=2" alt=""><span>A day for Shree Kathiriya</span></div><div class="top-note">Our little girl turns one</div></header>
   <audio id="birthdayMusic" src="images/birthday-music.mp3" autoplay loop preload="auto"></audio>
   <main>
@@ -197,8 +220,8 @@
       <h2>Let’s make a little<br>birthday magic.</h2>
       <p>From her first giggle to all the little moments in between, Shree has made every day brighter. We’d love to celebrate this special milestone with you.</p>
       <div class="detail-grid reveal">
-        <article class="detail-card detail-card--when"><div class="detail-icon" aria-hidden="true">✦</div><h3>When</h3><p class="event-time"><span>6 November</span><strong>7:30 PM</strong></p></article>
-        <article class="detail-card detail-card--where"><div class="detail-icon" aria-hidden="true">⌖</div><h3>Where</h3><p><a href="https://maps.app.goo.gl/haBCfFGWw6A9ipPk6" target="_blank" rel="noopener noreferrer">701 A, Kedar Hills, Abrama Rd,<br>opp. Savani Farm, nr. Gopin Circle,<br>Mota Varachha, Surat, Gujarat 394150</a><span class="host-note">Hosted by the Kathiriya family</span></p></article>
+        <article class="detail-card detail-card--when"><div class="detail-icon" aria-hidden="true">✦</div><h3>When</h3><p class="event-time"><span>6 November</span><strong>6:30 PM</strong></p></article>
+        <article class="detail-card detail-card--where"><div class="detail-icon" aria-hidden="true">⌖</div><h3>Where</h3><p><a href="https://maps.app.goo.gl/zkuza1Xb7gkFHtyB9?g_st=aw" target="_blank" rel="noopener noreferrer">La Festiva Restaurant | Banquet | Party Plot</a><span class="host-note">Hosted by the Kathiriya family</span></p></article>
         <article class="detail-card detail-card--welcome"><div class="detail-icon" aria-hidden="true">♡</div><h3>Come as you are</h3><p>Bring your smiles and appetite for cake. The little one can’t wait to celebrate with you!</p></article>
       </div>
     </section>
@@ -207,13 +230,28 @@
       <h2>We hope you can<br>celebrate with us.</h2>
       <p>We can’t wait to make a happy memory together.<br>For RSVP details, please contact Nikunj Kathiriya.</p>
       <button class="celebrate-btn" id="sparkleButton" type="button">✦ &nbsp; Make it sparkle</button>
-      <a class="rsvp-btn" href="https://maps.app.goo.gl/haBCfFGWw6A9ipPk6" target="_blank" rel="noopener noreferrer">⌖ &nbsp; Open venue map</a>
+      <a class="rsvp-btn" href="https://maps.app.goo.gl/zkuza1Xb7gkFHtyB9?g_st=aw" target="_blank" rel="noopener noreferrer">⌖ &nbsp; Open venue map</a>
     </section>
   </main>
   <footer class="foot">Made with love for Shree Kathiriya’s first birthday</footer>
+  </div>
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const envelopeScreen = document.getElementById('envelopeScreen');
+      const invitationContent = document.getElementById('invitationContent');
+      document.body.classList.add('envelope-closed');
+      document.getElementById('openEnvelope').addEventListener('click', () => {
+        if (envelopeScreen.classList.contains('is-opening')) return;
+        envelopeScreen.classList.add('is-opening');
+        window.setTimeout(() => {
+          envelopeScreen.classList.add('is-gone');
+          envelopeScreen.setAttribute('aria-hidden', 'true');
+          envelopeScreen.removeAttribute('role');
+          invitationContent.inert = false;
+          document.body.classList.remove('envelope-closed');
+        }, reduceMotion ? 30 : 1050);
+      }, { once: true });
       const birthdayMusic = document.getElementById('birthdayMusic');
       birthdayMusic.volume = 0.35;
       birthdayMusic.play().catch(() => {});
