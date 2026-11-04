@@ -156,7 +156,7 @@
     .envelope-screen:before{content:"";inset:-20%;z-index:-1;width:auto;height:auto;border-radius:50%;background:conic-gradient(from 20deg,transparent,#d6ad6b22,#d8b5e933,transparent,#e7a4a922,transparent);filter:blur(34px);opacity:.8;animation:envelopeAura 16s linear infinite}
     .envelope-screen:after{content:"";right:16%;bottom:18%;z-index:0;pointer-events:none}
     .envelope-wrap{perspective:1300px}.envelope-greeting{text-shadow:0 3px 18px #9d496a1c;letter-spacing:.01em}
-    .envelope{transform-style:preserve-3d;animation:envelopeFloat 5s ease-in-out infinite;filter:drop-shadow(0 32px 32px #42303c26) drop-shadow(0 8px 10px #9d496a16)}
+    .envelope{--tilt-x:0deg;--tilt-y:0deg;transform-style:preserve-3d;animation:envelopeFloat 5s ease-in-out infinite;filter:drop-shadow(0 32px 32px #42303c26) drop-shadow(0 8px 10px #9d496a16);transition:filter .3s;will-change:transform}
     .envelope-back{border:1px solid #fff8;box-shadow:inset 0 1px 0 #fff9,inset 0 -12px 30px #a15c6811;background:linear-gradient(145deg,#f7e9e2 0%,#ead4d6 52%,#dfd4e9 100%)}
     .envelope-back:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(115deg,transparent 28%,#ffffff70 48%,transparent 63%);opacity:.48;pointer-events:none}
     .envelope-letter{border:1px solid #fff;box-shadow:0 14px 30px #42303c1c,inset 0 0 0 5px #fbf4ed;background:linear-gradient(145deg,#fffefa,#fbf4ee);transform:translateZ(2px)}
@@ -170,7 +170,8 @@
     .envelope-open{position:relative;overflow:hidden;border:1px solid #fff;background:linear-gradient(110deg,#fffdf9,#f7e9ef 48%,#fff9ee);box-shadow:0 8px 28px #9d496a20,inset 0 1px 0 #fff;letter-spacing:.16em}
     .envelope-open:after{content:"";position:absolute;inset:-30% auto -30% -45%;width:32%;transform:skewX(-22deg);background:linear-gradient(90deg,transparent,#fff9,transparent);animation:buttonShimmer 4s ease-in-out infinite}
     .envelope-hint{letter-spacing:.12em;text-transform:uppercase;font-size:9px}
-    @keyframes envelopeFloat{0%,100%{transform:translateY(0) rotateX(1deg) rotateZ(-.4deg)}50%{transform:translateY(-10px) rotateX(-1deg) rotateZ(.4deg)}}
+    @keyframes envelopeFloat{0%,100%{transform:translateY(0) rotateX(calc(1deg + var(--tilt-y))) rotateY(var(--tilt-x)) rotateZ(-.4deg)}50%{transform:translateY(-10px) rotateX(calc(-1deg + var(--tilt-y))) rotateY(var(--tilt-x)) rotateZ(.4deg)}}
+    @media(hover:hover) and (pointer:fine){.envelope{cursor:pointer}.envelope:hover{filter:drop-shadow(0 38px 38px #42303c30) drop-shadow(0 8px 10px #9d496a22)}}
     @keyframes envelopeAura{to{transform:rotate(360deg)}}@keyframes sealGlow{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.35);opacity:0}}@keyframes buttonShimmer{0%,55%{left:-45%}80%,100%{left:125%}}
     @media(max-width:520px){.envelope-seal{width:54px;height:54px}.envelope-letter:before{inset:9px}.envelope-greeting{font-size:19px}}
     @media(prefers-reduced-motion:reduce){.envelope-screen:before,.envelope,.envelope-seal:after,.envelope-open:after{animation:none}}
@@ -261,6 +262,21 @@
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const envelope = document.querySelector('.envelope');
+      if (!reduceMotion && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+        const resetEnvelopeTilt = () => {
+          envelope.style.setProperty('--tilt-x', '0deg');
+          envelope.style.setProperty('--tilt-y', '0deg');
+        };
+        envelope.addEventListener('pointermove', event => {
+          const bounds = envelope.getBoundingClientRect();
+          const x = (event.clientX - bounds.left) / bounds.width - .5;
+          const y = (event.clientY - bounds.top) / bounds.height - .5;
+          envelope.style.setProperty('--tilt-x', `${x * 12}deg`);
+          envelope.style.setProperty('--tilt-y', `${y * -10}deg`);
+        });
+        envelope.addEventListener('pointerleave', resetEnvelopeTilt);
+      }
       const envelopeScreen = document.getElementById('envelopeScreen');
       const invitationContent = document.getElementById('invitationContent');
       document.body.classList.add('envelope-closed');
