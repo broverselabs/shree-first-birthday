@@ -151,6 +151,29 @@
     .carousel-controls{margin-top:0}
     @media(max-width:760px){.section{padding-block:46px}.memories,.celebrate,.rsvp{padding-block:42px}.gallery{margin-top:22px;row-gap:14px}.carousel-stage{height:390px;margin-top:16px}.carousel-card{width:min(58vw,220px);padding:8px 8px 12px}.carousel-card figcaption{font-size:13px;line-height:1.3}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;opacity:1!important;transform:none!important;translate:none!important}}
+    /* Modern dimensional envelope with soft holographic light. */
+    .envelope-screen{isolation:isolate;background:radial-gradient(ellipse at 50% 38%,#fffefa 0%,#f6e8eb 44%,#e8e4f3 100%)}
+    .envelope-screen:before{content:"";inset:-20%;z-index:-1;width:auto;height:auto;border-radius:50%;background:conic-gradient(from 20deg,transparent,#d6ad6b22,#d8b5e933,transparent,#e7a4a922,transparent);filter:blur(34px);opacity:.8;animation:envelopeAura 16s linear infinite}
+    .envelope-screen:after{content:"";right:16%;bottom:18%;z-index:0;pointer-events:none}
+    .envelope-wrap{perspective:1300px}.envelope-greeting{text-shadow:0 3px 18px #9d496a1c;letter-spacing:.01em}
+    .envelope{transform-style:preserve-3d;animation:envelopeFloat 5s ease-in-out infinite;filter:drop-shadow(0 32px 32px #42303c26) drop-shadow(0 8px 10px #9d496a16)}
+    .envelope-back{border:1px solid #fff8;box-shadow:inset 0 1px 0 #fff9,inset 0 -12px 30px #a15c6811;background:linear-gradient(145deg,#f7e9e2 0%,#ead4d6 52%,#dfd4e9 100%)}
+    .envelope-back:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(115deg,transparent 28%,#ffffff70 48%,transparent 63%);opacity:.48;pointer-events:none}
+    .envelope-letter{border:1px solid #fff;box-shadow:0 14px 30px #42303c1c,inset 0 0 0 5px #fbf4ed;background:linear-gradient(145deg,#fffefa,#fbf4ee);transform:translateZ(2px)}
+    .envelope-letter:before{content:"";position:absolute;inset:14px;border:1px solid #d6ad6b55;border-radius:4px;pointer-events:none}
+    .envelope-letter span{color:#a16a72}.envelope-letter strong{background:linear-gradient(100deg,#773651,#bd7185 50%,#8d568a);background-clip:text;-webkit-background-clip:text;color:transparent}
+    .envelope-pocket{border:1px solid #fff9;background:linear-gradient(135deg,#f5e5df 0%,#e9cfd4 50%,#ded3e8 100%);filter:drop-shadow(0 -1px 0 #fff9)}
+    .envelope-pocket:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 18%,#ffffff80 48%,transparent 72%);clip-path:polygon(0 0,50% 52%,100% 0,100% 5%,50% 58%,0 5%);opacity:.55}
+    .envelope-flap{filter:drop-shadow(0 8px 8px #75465320)}.envelope-flap:before{background:linear-gradient(145deg,#fff4ec,#f1dddd 55%,#e5d9eb);border:1px solid #fff9}
+    .envelope-seal{width:66px;height:66px;border:1px solid #fff9;background:radial-gradient(circle at 35% 28%,#df9db0 0%,#a84e74 48%,#743451 100%);box-shadow:0 0 0 7px #fff4,0 0 30px #d580a566,0 12px 20px #50243d45,inset 0 2px 5px #ffffff8a;font-size:29px;text-shadow:0 2px 3px #59253d80}
+    .envelope-seal:after{content:"";position:absolute;inset:-13px;border:1px solid #c38baa60;border-radius:50%;animation:sealGlow 2.8s ease-out infinite}
+    .envelope-open{position:relative;overflow:hidden;border:1px solid #fff;background:linear-gradient(110deg,#fffdf9,#f7e9ef 48%,#fff9ee);box-shadow:0 8px 28px #9d496a20,inset 0 1px 0 #fff;letter-spacing:.16em}
+    .envelope-open:after{content:"";position:absolute;inset:-30% auto -30% -45%;width:32%;transform:skewX(-22deg);background:linear-gradient(90deg,transparent,#fff9,transparent);animation:buttonShimmer 4s ease-in-out infinite}
+    .envelope-hint{letter-spacing:.12em;text-transform:uppercase;font-size:9px}
+    @keyframes envelopeFloat{0%,100%{transform:translateY(0) rotateX(1deg) rotateZ(-.4deg)}50%{transform:translateY(-10px) rotateX(-1deg) rotateZ(.4deg)}}
+    @keyframes envelopeAura{to{transform:rotate(360deg)}}@keyframes sealGlow{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.35);opacity:0}}@keyframes buttonShimmer{0%,55%{left:-45%}80%,100%{left:125%}}
+    @media(max-width:520px){.envelope-seal{width:54px;height:54px}.envelope-letter:before{inset:9px}.envelope-greeting{font-size:19px}}
+    @media(prefers-reduced-motion:reduce){.envelope-screen:before,.envelope,.envelope-seal:after,.envelope-open:after{animation:none}}
   </style>
 </head>
 <body>
