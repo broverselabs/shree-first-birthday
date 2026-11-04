@@ -7,6 +7,9 @@
   <meta name="description" content="Join us to celebrate Shree Kathiriya's first birthday.">
   <meta property="og:title" content="Shree Kathiriya Turns One | Birthday Invitation">
   <meta property="og:description" content="Join us for a joyful celebration of Shree Kathiriya's first birthday.">
+  <meta property="og:image" content="https://broverselabs.github.io/shree-birthday/images/logo.svg">
+  <meta property="og:image:type" content="image/svg+xml">
+  <meta property="og:image:alt" content="Shree Kathiriya birthday invitation logo">
   <link rel="icon" type="image/svg+xml" href="images/logo.svg?v=2">
   <link rel="shortcut icon" type="image/svg+xml" href="images/logo.svg?v=2">
   <title>Shree Kathiriya Turns One | Birthday Invitation</title>
@@ -58,16 +61,38 @@
     }
     @media(max-width:420px){.gallery{gap:18px}.gallery figure{padding:7px 7px 12px;border-radius:12px}.gallery figcaption{font-size:15px;padding:9px 6px 0}.gallery figcaption span{font-size:8px}}
     @media(max-width:340px){.gallery{gap:16px;padding-inline:0}.gallery figure{padding:6px 6px 10px}}
+    .gallery{grid-template-columns:repeat(4,minmax(0,1fr))}.gallery figure:nth-child(2){transform:none}.gallery img{height:auto;aspect-ratio:1;object-fit:cover}
+    @media(max-width:900px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:760px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.gallery figure,.gallery figure:nth-child(1),.gallery figure:nth-child(2),.gallery figure:nth-child(3){width:100%;margin:0;transform:none}.gallery figcaption{display:block;font-size:14px;line-height:1.35}.gallery figcaption span{display:block;margin-top:5px}}
+    @media(max-width:420px){.gallery{gap:10px}.gallery figcaption{font-size:12px;padding:9px 4px 0}.gallery figcaption span{font-size:8px}}
     /* Finishing touches for a more editorial, polished invitation. */
     .photo-feature{border:1px solid #fff;box-shadow:0 28px 80px #42303c2e,0 0 0 1px #ead7dc}.photo-feature:before{content:"BIRTHDAY GIRL · 01";position:absolute;z-index:2;top:24px;left:-18px;padding:10px 14px;border:1px solid #ffffff80;border-radius:999px;background:#fffaf3eF;color:var(--berry);font:700 9px 'DM Sans',sans-serif;letter-spacing:.16em;box-shadow:0 8px 22px #42303c1c;transform:rotate(-7deg)}
     .gallery figure{position:relative;padding:10px 10px 16px;border:1px solid #fff;border-radius:19px;background:linear-gradient(145deg,#fff 0%,#fffaf5 65%,#f7edf1 100%);box-shadow:0 18px 46px #42303c16,0 2px 8px #42303c08}.gallery img{border-radius:12px;filter:saturate(1.05) contrast(1.02);transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s}.gallery figure:hover img{transform:scale(1.025);filter:saturate(1.1) contrast(1.03)}.gallery figcaption{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 8px 0}.gallery figcaption span{float:none;white-space:nowrap;background:#f5e8ed;color:var(--berry);padding:5px 8px;border-radius:99px;font-size:9px;letter-spacing:.08em}.detail-card{transition:transform .3s,border-color .3s,background .3s}.detail-card:hover{transform:translateY(-4px);border-color:#d9b87966;background:#ffffff12}.rsvp-btn,.celebrate-btn{transition:transform .22s,box-shadow .22s,background .22s}.rsvp-btn:hover,.celebrate-btn:hover{box-shadow:0 12px 28px #9d496a2b}
     @media(max-width:760px){.gallery figure:nth-child(1){width:calc(100% - 10px);margin-left:0}.gallery figure:nth-child(2){width:calc(100% - 18px);margin-left:auto}.gallery figure:nth-child(3){width:calc(100% - 26px);margin-left:0}.gallery figcaption{font-size:16px}.gallery figcaption span{display:inline-block;float:none;font-size:8px;padding:5px 7px}.photo-feature:before{left:-10px;top:19px}}
     @media(max-width:420px){.gallery figure:nth-child(1){width:calc(100% - 5px)}.gallery figure:nth-child(2){width:calc(100% - 10px)}.gallery figure:nth-child(3){width:calc(100% - 15px)}.gallery figcaption{font-size:14px;gap:5px;padding:10px 4px 0}.gallery figcaption span{font-size:7px;padding:4px 6px}}
+    .detail-grid{gap:18px;align-items:stretch}
+    .detail-card{position:relative;isolation:isolate;overflow:hidden;min-height:225px;padding:26px 24px;border:1px solid #e6bf8b45;border-radius:22px;background:linear-gradient(145deg,#ffffff15 0%,#ffffff09 62%,#d6ad6b0c 100%);box-shadow:0 20px 48px #17152230;backdrop-filter:blur(10px)}
+    .detail-card:before{content:"";position:absolute;z-index:0;pointer-events:none;width:150px;height:150px;right:-62px;top:-72px;border-radius:50%;background:#e6bf8b12;filter:blur(2px)}.detail-card>*{position:relative;z-index:1}
+    .detail-card .detail-icon{width:44px;height:44px;border:1px solid #e6bf8b48;background:#e6bf8b1b;color:#f0d09b;font-size:18px}
+    .detail-card h3{margin:19px 0 12px;color:#fff9f2;font-size:11px;letter-spacing:.19em;text-transform:uppercase}
+    .detail-card p{color:#ded8df;font-size:13px;line-height:1.75}
+    .detail-card .event-time{display:grid;gap:2px}
+    .event-time span{color:#f5d7c5;font:500 18px 'Playfair Display',Georgia,serif}
+    .event-time strong{color:#fff9f2;font:600 30px 'Playfair Display',Georgia,serif;letter-spacing:-.03em}
+    .detail-card--where a{display:block;color:#f5d7c5;text-decoration:none;border:0;line-height:1.75}
+    .detail-card--where a:hover{color:#fff;text-decoration:underline;text-decoration-color:#e6bf8b}
+    .detail-card .host-note{display:block;margin-top:13px;padding-top:11px;border-top:1px solid #ffffff20;color:#e6bf8b;font-size:11px;letter-spacing:.02em}
+    .detail-card--welcome p{max-width:250px;color:#f5e8df;font:500 17px/1.65 'Playfair Display',Georgia,serif}
+    .detail-card:hover{transform:translateY(-5px);border-color:#e6bf8b85;background:linear-gradient(145deg,#ffffff1d 0%,#ffffff0b 62%,#d6ad6b12 100%);box-shadow:0 25px 56px #17152245}
+    @media(max-width:760px){.detail-card{min-height:0;padding:18px}.detail-card h3{margin:0 0 6px}.detail-card--welcome p{max-width:none;font-size:15px}}
+    .memories{padding-block:clamp(44px,6vw,72px)}
+    .celebrate,.rsvp{padding-block:clamp(44px,6vw,72px)}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;opacity:1!important;transform:none!important;translate:none!important}}
   </style>
 </head>
 <body>
   <header class="topbar"><div class="brand"><img class="brand-logo" src="images/logo.svg?v=2" alt=""><span>A day for Shree Kathiriya</span></div><div class="top-note">Our little girl turns one</div></header>
+  <audio id="birthdayMusic" src="images/birthday-music.mp3" autoplay loop preload="auto"></audio>
   <main>
     <section class="hero" aria-label="First birthday invitation">
       <div class="copy">
@@ -79,17 +104,26 @@
       </div>
       <div class="art">
         <span class="photo-spark one" aria-hidden="true">✦</span><span class="photo-spark two" aria-hidden="true">✧</span>
-        <div class="photo-feature"><img src="images/shree-nikunj-1.jpg" alt="Shree smiling in her birthday portrait"><div class="photo-caption"><small>Our little sunshine</small>One whole year ♡</div></div>
+        <div class="photo-feature"><img src="images/cover.png" alt="Shree's first birthday cover photo"><div class="photo-caption"><small>Our little sunshine</small>One whole year ♡</div></div>
       </div>
     </section>
     <section class="section memories reveal" aria-labelledby="memories-title">
-      <div class="section-kicker">A year of little moments</div>
-      <h2 id="memories-title">Growing up so fast.</h2>
-      <p class="memories-lead">A few favorite glimpses of the little girl who made our world brighter.</p>
+      <div class="section-kicker">Twelve months of magic</div>
+      <h2 id="memories-title">A year in pictures.</h2>
+      <p class="memories-lead">A little look at Shree's first twelve months, month by month.</p>
       <div class="gallery">
-        <figure><img src="images/shree-nikunj-1.jpg" alt="Shree in a light outfit, smiling for the camera"><figcaption>Little rays of sunshine <span>01 / 03</span></figcaption></figure>
-        <figure><img src="images/shree-nikunj-2.jpg" alt="Shree standing and holding a wooden toy"><figcaption>Curious about everything <span>02 / 03</span></figcaption></figure>
-        <figure><img src="images/shree-nikunj-3.jpg" alt="Shree sitting in a green wooden toy cart"><figcaption>Our sweetest adventure <span>03 / 03</span></figcaption></figure>
+        <figure><img src="images/1.png" alt="Shree smiling in her bright orange bow"><figcaption>A smile that made our world brighter <span>01 / 12</span></figcaption></figure>
+        <figure><img src="images/2.png" alt="Shree smiling, wrapped in pink among autumn leaves"><figcaption>A little smile wrapped in love <span>02 / 12</span></figcaption></figure>
+        <figure><img src="images/3.png" alt="Shree cozy in a knitted outfit on a soft brown blanket"><figcaption>Cozy cuddles and little dreams <span>03 / 12</span></figcaption></figure>
+        <figure><img src="images/4.png" alt="Shree in a blue dress with a full, flowing skirt"><figcaption>A little blue, a whole lot of wonder <span>04 / 12</span></figcaption></figure>
+        <figure><img src="images/5.png" alt="Shree sitting in a white sweater and brown shorts"><figcaption>Our little sunshine in soft white <span>05 / 12</span></figcaption></figure>
+        <figure><img src="images/6.png" alt="Shree among clouds in a toy airplane scene"><figcaption>Little wings, big dreams <span>06 / 12</span></figcaption></figure>
+        <figure><img src="images/7.png" alt="Shree celebrating beside a half-birthday cake"><figcaption>A little cake, a lot to celebrate <span>07 / 12</span></figcaption></figure>
+        <figure><img src="images/8.png" alt="Shree sitting in a white baby seat with a bear print"><figcaption>Floating through our hearts <span>08 / 12</span></figcaption></figure>
+        <figure><img src="images/9.png" alt="Shree reaching for a soft elephant toy"><figcaption>A new friend for every adventure <span>09 / 12</span></figcaption></figure>
+        <figure><img src="images/10.png" alt="Shree smiling beside a small wooden table"><figcaption>Little hands, big discoveries <span>10 / 12</span></figcaption></figure>
+        <figure><img src="images/11.png" alt="Shree standing with support at a wooden walker"><figcaption>One brave step at a time <span>11 / 12</span></figcaption></figure>
+        <figure><img src="images/12.png" alt="Shree smiling in a dark top with her favorite soft toys"><figcaption>A giggle, a cuddle, a heart so full <span>12 / 12</span></figcaption></figure>
       </div>
     </section>
     <section class="section celebrate reveal" id="celebration">
@@ -97,15 +131,15 @@
       <h2>Let’s make a little<br>birthday magic.</h2>
       <p>From her first giggle to all the little moments in between, Shree has made every day brighter. We’d love to celebrate this special milestone with you.</p>
       <div class="detail-grid reveal">
-        <article class="detail-card"><div class="detail-icon" aria-hidden="true">✦</div><h3>When</h3><p>6 November<br>Time to be announced</p></article>
-        <article class="detail-card"><div class="detail-icon" aria-hidden="true">⌖</div><h3>Where</h3><p><a href="https://maps.app.goo.gl/haBCfFGWw6A9ipPk6" target="_blank" rel="noopener noreferrer">701 A, Kedar Hills, Abrama Rd,<br>opp. Savani Farm, nr. Gopin Circle,<br>Mota Varachha, Surat, Gujarat 394150</a><br><span>Hosted by Dad, Nikunj Kathirya</span></p></article>
-        <article class="detail-card"><div class="detail-icon" aria-hidden="true">♡</div><h3>Come as you are</h3><p>Bring your smiles and appetite<br>for cake. The little one can’t wait!</p></article>
+        <article class="detail-card detail-card--when"><div class="detail-icon" aria-hidden="true">✦</div><h3>When</h3><p class="event-time"><span>6 November</span><strong>7:30 PM</strong></p></article>
+        <article class="detail-card detail-card--where"><div class="detail-icon" aria-hidden="true">⌖</div><h3>Where</h3><p><a href="https://maps.app.goo.gl/haBCfFGWw6A9ipPk6" target="_blank" rel="noopener noreferrer">701 A, Kedar Hills, Abrama Rd,<br>opp. Savani Farm, nr. Gopin Circle,<br>Mota Varachha, Surat, Gujarat 394150</a><span class="host-note">Hosted by the Kathiriya family</span></p></article>
+        <article class="detail-card detail-card--welcome"><div class="detail-icon" aria-hidden="true">♡</div><h3>Come as you are</h3><p>Bring your smiles and appetite for cake. The little one can’t wait to celebrate with you!</p></article>
       </div>
     </section>
     <section class="section rsvp reveal">
       <div class="section-kicker">A little note</div>
       <h2>We hope you can<br>celebrate with us.</h2>
-      <p>We can’t wait to make a happy memory together.<br>For RSVP details, please contact Nikunj Kathirya.</p>
+      <p>We can’t wait to make a happy memory together.<br>For RSVP details, please contact Nikunj Kathiriya.</p>
       <button class="celebrate-btn" id="sparkleButton" type="button">✦ &nbsp; Make it sparkle</button>
       <a class="rsvp-btn" href="https://maps.app.goo.gl/haBCfFGWw6A9ipPk6" target="_blank" rel="noopener noreferrer">⌖ &nbsp; Open venue map</a>
     </section>
@@ -114,6 +148,16 @@
   <script>
     (() => {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const birthdayMusic = document.getElementById('birthdayMusic');
+      birthdayMusic.volume = 0.35;
+      birthdayMusic.play().catch(() => {});
+      const startMusicOnInteraction = () => {
+        birthdayMusic.play().catch(() => {});
+        document.removeEventListener('pointerdown', startMusicOnInteraction);
+        document.removeEventListener('keydown', startMusicOnInteraction);
+      };
+      document.addEventListener('pointerdown', startMusicOnInteraction, { once: true });
+      document.addEventListener('keydown', startMusicOnInteraction, { once: true });
       const revealItems = document.querySelectorAll('.reveal, .gallery figure, .detail-card');
       if (!reduceMotion && 'IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver(entries => {
