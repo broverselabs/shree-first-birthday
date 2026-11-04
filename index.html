@@ -70,6 +70,35 @@
     .gallery figure{position:relative;padding:10px 10px 16px;border:1px solid #fff;border-radius:19px;background:linear-gradient(145deg,#fff 0%,#fffaf5 65%,#f7edf1 100%);box-shadow:0 18px 46px #42303c16,0 2px 8px #42303c08}.gallery img{border-radius:12px;filter:saturate(1.05) contrast(1.02);transition:transform .5s cubic-bezier(.2,.7,.2,1),filter .5s}.gallery figure:hover img{transform:scale(1.025);filter:saturate(1.1) contrast(1.03)}.gallery figcaption{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 8px 0}.gallery figcaption span{float:none;white-space:nowrap;background:#f5e8ed;color:var(--berry);padding:5px 8px;border-radius:99px;font-size:9px;letter-spacing:.08em}.detail-card{transition:transform .3s,border-color .3s,background .3s}.detail-card:hover{transform:translateY(-4px);border-color:#d9b87966;background:#ffffff12}.rsvp-btn,.celebrate-btn{transition:transform .22s,box-shadow .22s,background .22s}.rsvp-btn:hover,.celebrate-btn:hover{box-shadow:0 12px 28px #9d496a2b}
     @media(max-width:760px){.gallery figure:nth-child(1){width:calc(100% - 10px);margin-left:0}.gallery figure:nth-child(2){width:calc(100% - 18px);margin-left:auto}.gallery figure:nth-child(3){width:calc(100% - 26px);margin-left:0}.gallery figcaption{font-size:16px}.gallery figcaption span{display:inline-block;float:none;font-size:8px;padding:5px 7px}.photo-feature:before{left:-10px;top:19px}}
     @media(max-width:420px){.gallery figure:nth-child(1){width:calc(100% - 5px)}.gallery figure:nth-child(2){width:calc(100% - 10px)}.gallery figure:nth-child(3){width:calc(100% - 15px)}.gallery figcaption{font-size:14px;gap:5px;padding:10px 4px 0}.gallery figcaption span{font-size:7px;padding:4px 6px}}
+    /* On phones, show each memory as a full-width card on its own row. */
+    @media(max-width:760px){.gallery{grid-template-columns:minmax(0,1fr);max-width:430px;gap:20px}.gallery figure,.gallery figure:nth-child(n){width:100%;margin:0;transform:none}.gallery img{aspect-ratio:4/5}.gallery figcaption{display:flex;font-size:16px;line-height:1.4;padding:12px 8px 0}.gallery figcaption span{display:inline-block;margin:0;font-size:9px;padding:5px 8px}}
+    /* Keep the invitation typography balanced from compact phones to desktop. */
+    .headline-first{display:block;white-space:nowrap}
+    h1{font-size:clamp(52px,8vw,108px);line-height:.98}
+    .age{font-size:clamp(24px,3.3vw,42px)}
+    .intro{font-size:clamp(13px,1.05vw,15px);line-height:1.8}
+    .memories h2,.celebrate h2,.details-section h2,.rsvp h2{font-size:clamp(34px,5vw,62px);line-height:1.1}
+    .gallery figcaption{font-size:clamp(15px,1.45vw,18px);line-height:1.4}
+    .detail-card h3{font-size:clamp(12px,1.2vw,16px)}
+    @media(max-width:760px){
+      h1{font-size:clamp(36px,10.5vw,58px);line-height:.98;letter-spacing:-.045em;margin:18px 0 8px}
+      .age{font-size:clamp(23px,6.4vw,30px);line-height:1.2;margin:14px 0}
+      .intro{max-width:36ch;font-size:clamp(13px,3.8vw,15px);line-height:1.7}
+      .eyebrow{font-size:clamp(8px,2.5vw,10px);letter-spacing:.2em}
+      .date-pill{font-size:clamp(10px,3vw,12px)}
+      .memories h2,.celebrate h2,.rsvp h2{font-size:clamp(34px,9vw,48px);line-height:1.08}
+      .memories-lead,.celebrate p,.rsvp p{font-size:clamp(12px,3.5vw,14px);line-height:1.75}
+      .gallery figcaption{font-size:clamp(15px,4.2vw,17px);line-height:1.4}
+      .detail-card h3{font-size:12px;letter-spacing:.15em}
+      .detail-card .event-time span{font-size:16px}.detail-card .event-time strong{font-size:26px}
+    }
+    @media(max-width:380px){h1{font-size:clamp(33px,9.6vw,42px)}.age{font-size:23px}.topbar{padding-inline:14px}.brand{font-size:9px;letter-spacing:.08em}}
+    @media(max-width:760px){
+      .gallery img{aspect-ratio:1/1;object-fit:cover;object-position:center}
+      .gallery figure:nth-child(odd){transform:rotate(-1deg)}
+      .gallery figure:nth-child(even){transform:translateY(8px) rotate(1deg)}
+      .gallery figure:hover{transform:translateY(-3px) rotate(0)}
+    }
     .detail-grid{gap:18px;align-items:stretch}
     .detail-card{position:relative;isolation:isolate;overflow:hidden;min-height:225px;padding:26px 24px;border:1px solid #e6bf8b45;border-radius:22px;background:linear-gradient(145deg,#ffffff15 0%,#ffffff09 62%,#d6ad6b0c 100%);box-shadow:0 20px 48px #17152230;backdrop-filter:blur(10px)}
     .detail-card:before{content:"";position:absolute;z-index:0;pointer-events:none;width:150px;height:150px;right:-62px;top:-72px;border-radius:50%;background:#e6bf8b12;filter:blur(2px)}.detail-card>*{position:relative;z-index:1}
@@ -97,7 +126,7 @@
     <section class="hero" aria-label="First birthday invitation">
       <div class="copy">
         <div class="eyebrow">A little wish came true</div>
-        <h1>One year<br>of <span class="name">wonder.</span></h1>
+        <h1><span class="headline-first">One year of</span><span class="name">wonder.</span></h1>
         <div class="age">Shree Kathiriya turns one</div>
         <p class="intro">Tiny hands, bright smiles, and a whole year of love. Join us for a joyful celebration of our little girl's very first birthday.</p>
         <div class="date-pill"><b>Save the date</b><span class="dot"></span>6 November</div>
