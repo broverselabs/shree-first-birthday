@@ -218,7 +218,7 @@
   <div class="envelope-screen" id="envelopeScreen" role="dialog" aria-modal="true" aria-labelledby="envelopeGreeting">
     <div class="envelope-wrap"><p class="envelope-greeting" id="envelopeGreeting">A little birthday surprise for you</p>
       <div class="envelope" aria-hidden="true">
-        <img class="envelope-image is-visible" src="images/Shree_Closed_Envelope_Separate.svg" alt="">
+        <img class="envelope-image" src="images/Shree_Closed_Envelope_Separate.svg" alt="">
         <img class="envelope-image" src="images/Shree_Open_Envelope_Separate.svg" alt="">
         <div class="envelope-back"></div><div class="envelope-letter"><span>You're invited</span><strong>Shree turns one!</strong><small>Open your invitation</small></div><div class="envelope-pocket"></div><div class="envelope-flap"></div>
         <div class="envelope-decor">
@@ -331,6 +331,9 @@
       document.body.classList.add('envelope-closed');
       const envelopeImages = envelopeScreen.querySelectorAll('.envelope-image');
       const imageSequenceTimers = [];
+      window.requestAnimationFrame(() => {
+        if (!envelopeScreen.classList.contains('is-opening')) envelopeImages[0].classList.add('is-visible');
+      });
       const finishIntro = () => {
         if (envelopeScreen.classList.contains('is-opening')) return;
         imageSequenceTimers.forEach(window.clearTimeout);
