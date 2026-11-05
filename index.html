@@ -329,7 +329,6 @@
       const invitationContent = document.getElementById('invitationContent');
       document.body.classList.add('envelope-closed');
       const envelopeImages = envelopeScreen.querySelectorAll('.envelope-image');
-      const imageSequenceTimers = [];
       const birthdayMusic = document.getElementById('birthdayMusic');
       birthdayMusic.volume = 0.35;
       const startBirthdayMusic = () => {
@@ -352,7 +351,6 @@
       const finishIntro = () => {
         if (envelopeScreen.classList.contains('is-opening')) return;
         startBirthdayMusic();
-        imageSequenceTimers.forEach(window.clearTimeout);
         invitationContent.classList.add('is-revealing');
         envelopeScreen.classList.add('is-opening');
         window.setTimeout(() => {
@@ -363,17 +361,28 @@
           document.body.classList.remove('envelope-closed');
         }, reduceMotion ? 30 : 1250);
       };
-      document.getElementById('openEnvelope').addEventListener('click', finishIntro, { once: true });
-      imageSequenceTimers.push(window.setTimeout(() => {
-        envelopeImages[1].decode().then(() => {
-          if (envelopeScreen.classList.contains('is-opening')) return;
-          envelopeImages[0].classList.remove('is-visible');
-          envelopeImages[0].classList.add('is-leaving');
-          envelopeImages[1].classList.add('is-visible');
-        }).catch(error => {
+      const openEnvelopeButton = document.getElementById('openEnvelope');
+      const envelopeHint = envelopeScreen.querySelector('.envelope-hint');
+      let introStarted = false;
+      openEnvelopeButton.addEventListener('click', async () => {
+        if (introStarted) return;
+        introStarted = true;
+        openEnvelopeButton.disabled = true;
+        startBirthdayMusic();
+        try {
+          await envelopeImages[1].decode();
+        } catch (error) {
           console.error('Unable to prepare the open-envelope image.', error);
-        });
-      }, reduceMotion ? 900 : 1400));
+          envelopeHint.textContent = 'Unable to open the invitation. Please try again.';
+          openEnvelopeButton.disabled = false;
+          introStarted = false;
+          return;
+        }
+        envelopeImages[0].classList.remove('is-visible');
+        envelopeImages[0].classList.add('is-leaving');
+        envelopeImages[1].classList.add('is-visible');
+        window.setTimeout(finishIntro, reduceMotion ? 100 : 2000);
+      });
       const revealItems = document.querySelectorAll('.reveal, .gallery figure, .detail-card');
       if (!reduceMotion && 'IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver(entries => {
