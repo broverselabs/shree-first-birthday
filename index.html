@@ -163,10 +163,9 @@
     .envelope:before{display:none}.envelope:hover{box-shadow:none}
     .envelope-art{display:none}.envelope>:not(.envelope-image){display:none}
     .envelope-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;object-position:center;opacity:0;transform:scale(.88) translateY(16px);filter:drop-shadow(0 20px 20px #42303c2c);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
-    .envelope-image.is-visible{opacity:1;transform:scale(1) translateY(0);animation:envelopeImageIn .55s cubic-bezier(.2,.75,.25,1) both}
+    .envelope-image.is-visible{opacity:1;transform:scale(1) translateY(0)}
     .envelope-image.is-leaving{opacity:0;transform:scale(.9) translateY(-18px);transition:opacity .45s ease,transform .45s cubic-bezier(.4,0,.8,.3)}
-    @keyframes envelopeImageIn{from{opacity:0;transform:scale(.88) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
-    @media(prefers-reduced-motion:reduce){.envelope-image{transition:none;animation:none}.envelope-image.is-visible{opacity:1;transform:none}}
+    @media(prefers-reduced-motion:reduce){.envelope-image{transition:none}.envelope-image.is-visible{opacity:1;transform:none}}
     .envelope-screen.is-opening .envelope{box-shadow:none}
     .envelope-back{border:1px solid #fff8;box-shadow:inset 0 1px 0 #fff9,inset 0 -12px 30px #a15c6811;background:linear-gradient(145deg,#f7e9e2 0%,#ead4d6 52%,#dfd4e9 100%)}
     .envelope-back:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(115deg,transparent 28%,#ffffff70 48%,transparent 63%);opacity:.48;pointer-events:none}
@@ -218,7 +217,7 @@
   <div class="envelope-screen" id="envelopeScreen" role="dialog" aria-modal="true" aria-labelledby="envelopeGreeting">
     <div class="envelope-wrap"><p class="envelope-greeting" id="envelopeGreeting">A little birthday surprise for you</p>
       <div class="envelope" aria-hidden="true">
-        <img class="envelope-image" src="images/Shree_Closed_Envelope_Separate.svg" alt="">
+        <img class="envelope-image is-visible" src="images/Shree_Closed_Envelope_Separate.svg" alt="">
         <img class="envelope-image" src="images/Shree_Open_Envelope_Separate.svg" alt="">
         <div class="envelope-back"></div><div class="envelope-letter"><span>You're invited</span><strong>Shree turns one!</strong><small>Open your invitation</small></div><div class="envelope-pocket"></div><div class="envelope-flap"></div>
         <div class="envelope-decor">
@@ -331,11 +330,28 @@
       document.body.classList.add('envelope-closed');
       const envelopeImages = envelopeScreen.querySelectorAll('.envelope-image');
       const imageSequenceTimers = [];
-      window.requestAnimationFrame(() => {
-        if (!envelopeScreen.classList.contains('is-opening')) envelopeImages[0].classList.add('is-visible');
-      });
+      const birthdayMusic = document.getElementById('birthdayMusic');
+      birthdayMusic.volume = 0.35;
+      const startBirthdayMusic = () => {
+        if (!birthdayMusic.paused) return;
+        const playback = birthdayMusic.play();
+        if (playback) {
+          playback.then(() => {
+            document.removeEventListener('pointerdown', startBirthdayMusic);
+            document.removeEventListener('keydown', startBirthdayMusic);
+          }).catch(error => {
+            if (error.name !== 'NotAllowedError') {
+              console.error('Unable to play the birthday music.', error);
+            }
+          });
+        }
+      };
+      document.addEventListener('pointerdown', startBirthdayMusic);
+      document.addEventListener('keydown', startBirthdayMusic);
+      startBirthdayMusic();
       const finishIntro = () => {
         if (envelopeScreen.classList.contains('is-opening')) return;
+        startBirthdayMusic();
         imageSequenceTimers.forEach(window.clearTimeout);
         invitationContent.classList.add('is-revealing');
         envelopeScreen.classList.add('is-opening');
@@ -349,21 +365,15 @@
       };
       document.getElementById('openEnvelope').addEventListener('click', finishIntro, { once: true });
       imageSequenceTimers.push(window.setTimeout(() => {
-        if (envelopeScreen.classList.contains('is-opening')) return;
-        envelopeImages[0].classList.remove('is-visible');
-        envelopeImages[0].classList.add('is-leaving');
-        envelopeImages[1].classList.add('is-visible');
+        envelopeImages[1].decode().then(() => {
+          if (envelopeScreen.classList.contains('is-opening')) return;
+          envelopeImages[0].classList.remove('is-visible');
+          envelopeImages[0].classList.add('is-leaving');
+          envelopeImages[1].classList.add('is-visible');
+        }).catch(error => {
+          console.error('Unable to prepare the open-envelope image.', error);
+        });
       }, reduceMotion ? 900 : 1400));
-      const birthdayMusic = document.getElementById('birthdayMusic');
-      birthdayMusic.volume = 0.35;
-      birthdayMusic.play().catch(() => {});
-      const startMusicOnInteraction = () => {
-        birthdayMusic.play().catch(() => {});
-        document.removeEventListener('pointerdown', startMusicOnInteraction);
-        document.removeEventListener('keydown', startMusicOnInteraction);
-      };
-      document.addEventListener('pointerdown', startMusicOnInteraction, { once: true });
-      document.addEventListener('keydown', startMusicOnInteraction, { once: true });
       const revealItems = document.querySelectorAll('.reveal, .gallery figure, .detail-card');
       if (!reduceMotion && 'IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver(entries => {
