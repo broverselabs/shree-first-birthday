@@ -159,9 +159,14 @@
     .envelope-screen:before{content:"";inset:-20%;z-index:-1;width:auto;height:auto;border-radius:50%;background:conic-gradient(from 20deg,transparent,#d6ad6b22,#d8b5e933,transparent,#e7a4a922,transparent);filter:blur(34px);opacity:.8;animation:envelopeAura 16s linear infinite}
     .envelope-screen:after{content:"";right:16%;bottom:18%;z-index:0;pointer-events:none}
     .envelope-wrap{perspective:1300px}.envelope-greeting{text-shadow:0 3px 18px #9d496a1c;letter-spacing:.01em}
-    .envelope{--tilt-x:0deg;--tilt-y:0deg;width:min(520px,52vh,88vw);aspect-ratio:940/1000;margin-inline:auto;transform-style:preserve-3d;animation:envelopeFloat 5s ease-in-out infinite;transition:transform .3s;will-change:transform}
+    .envelope{--tilt-x:0deg;--tilt-y:0deg;width:min(560px,88vw,52vh);height:min(56vh,70vw,450px);aspect-ratio:auto;margin-inline:auto;transform-style:preserve-3d;animation:envelopeFloat 5s ease-in-out infinite;transition:transform .3s;will-change:transform}
     .envelope:before{display:none}.envelope:hover{box-shadow:none}
-    .envelope-art{display:block;width:100%;height:100%;border:0;background:transparent;filter:drop-shadow(0 20px 20px #42303c2c)}.envelope>:not(.envelope-art){display:none}
+    .envelope-art{display:none}.envelope>:not(.envelope-image){display:none}
+    .envelope-image{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;object-position:center;opacity:0;transform:scale(.88) translateY(16px);filter:drop-shadow(0 20px 20px #42303c2c);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+    .envelope-image.is-visible{opacity:1;transform:scale(1) translateY(0);animation:envelopeImageIn .55s cubic-bezier(.2,.75,.25,1) both}
+    .envelope-image.is-leaving{opacity:0;transform:scale(.9) translateY(-18px);transition:opacity .45s ease,transform .45s cubic-bezier(.4,0,.8,.3)}
+    @keyframes envelopeImageIn{from{opacity:0;transform:scale(.88) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    @media(prefers-reduced-motion:reduce){.envelope-image{transition:none;animation:none}.envelope-image.is-visible{opacity:1;transform:none}}
     .envelope-screen.is-opening .envelope{box-shadow:none}
     .envelope-back{border:1px solid #fff8;box-shadow:inset 0 1px 0 #fff9,inset 0 -12px 30px #a15c6811;background:linear-gradient(145deg,#f7e9e2 0%,#ead4d6 52%,#dfd4e9 100%)}
     .envelope-back:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(115deg,transparent 28%,#ffffff70 48%,transparent 63%);opacity:.48;pointer-events:none}
@@ -212,7 +217,9 @@
 <body>
   <div class="envelope-screen" id="envelopeScreen" role="dialog" aria-modal="true" aria-labelledby="envelopeGreeting">
     <div class="envelope-wrap"><p class="envelope-greeting" id="envelopeGreeting">A little birthday surprise for you</p>
-      <div class="envelope" aria-hidden="true"><object class="envelope-art" data="images/12129347-f1e4-4282-9b0d-ed32a6381502.svg" type="image/svg+xml"></object>
+      <div class="envelope" aria-hidden="true">
+        <img class="envelope-image is-visible" src="images/Shree_Closed_Envelope_Separate.svg" alt="">
+        <img class="envelope-image" src="images/Shree_Open_Envelope_Separate.svg" alt="">
         <div class="envelope-back"></div><div class="envelope-letter"><span>You're invited</span><strong>Shree turns one!</strong><small>Open your invitation</small></div><div class="envelope-pocket"></div><div class="envelope-flap"></div>
         <div class="envelope-decor">
           <svg class="envelope-flower flower-left" viewBox="0 0 100 100"><path d="M50 92c-3-20 3-39 20-55M50 77C33 65 25 53 25 37M61 66c15-2 24 2 31 11M42 59c-12 1-19 6-25 14" fill="none" stroke="#84977b" stroke-width="3" stroke-linecap="round"/><path d="M48 65c-13 0-19-7-20-17 12-1 20 5 20 17Zm15-15c2-12 9-17 19-16 0 11-7 18-19 16Zm-26-9c-11-5-14-14-10-23 11 4 15 12 10 23Z" fill="#a9b99a"/><g fill="#e8a9b7" stroke="#fff3e9" stroke-width="2"><circle cx="76" cy="31" r="8"/><circle cx="66" cy="31" r="8"/><circle cx="71" cy="22" r="8"/><circle cx="71" cy="40" r="8"/></g><circle cx="71" cy="31" r="4" fill="#d5a75f"/><g fill="#f2c5c7"><circle cx="25" cy="35" r="6"/><circle cx="18" cy="35" r="6"/><circle cx="21" cy="29" r="6"/><circle cx="22" cy="41" r="6"/></g><circle cx="21" cy="35" r="3" fill="#d5a75f"/></svg>
@@ -322,8 +329,11 @@
       const envelopeScreen = document.getElementById('envelopeScreen');
       const invitationContent = document.getElementById('invitationContent');
       document.body.classList.add('envelope-closed');
-      document.getElementById('openEnvelope').addEventListener('click', () => {
+      const envelopeImages = envelopeScreen.querySelectorAll('.envelope-image');
+      const imageSequenceTimers = [];
+      const finishIntro = () => {
         if (envelopeScreen.classList.contains('is-opening')) return;
+        imageSequenceTimers.forEach(window.clearTimeout);
         invitationContent.classList.add('is-revealing');
         envelopeScreen.classList.add('is-opening');
         window.setTimeout(() => {
@@ -333,7 +343,14 @@
           invitationContent.inert = false;
           document.body.classList.remove('envelope-closed');
         }, reduceMotion ? 30 : 1250);
-      }, { once: true });
+      };
+      document.getElementById('openEnvelope').addEventListener('click', finishIntro, { once: true });
+      imageSequenceTimers.push(window.setTimeout(() => {
+        if (envelopeScreen.classList.contains('is-opening')) return;
+        envelopeImages[0].classList.remove('is-visible');
+        envelopeImages[0].classList.add('is-leaving');
+        envelopeImages[1].classList.add('is-visible');
+      }, reduceMotion ? 900 : 1400));
       const birthdayMusic = document.getElementById('birthdayMusic');
       birthdayMusic.volume = 0.35;
       birthdayMusic.play().catch(() => {});
